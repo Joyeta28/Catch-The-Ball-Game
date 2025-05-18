@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import utils.GameUtils;
 
 public class GameOverScreen {
     JFrame frame;
@@ -12,9 +13,10 @@ public class GameOverScreen {
         frame = new JFrame("Game Over");
         frame.setSize(boardWidth, boardHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
+        GameUtils.centerWindow(frame);
 
-        backgroundImage = new ImageIcon(getClass().getResource("./background.jpg")).getImage();
+        Image backgroundImage = GameUtils.loadImage("/background.jpg");
+
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {

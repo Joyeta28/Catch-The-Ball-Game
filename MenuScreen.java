@@ -2,22 +2,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import utils.GameUtils;
 
 public class MenuScreen {
     private JFrame menuFrame;
 
-    int boardWidth = 630;
-    int boardHeight = 460;
-
-    Image backgroundImage;
-
     MenuScreen() {
+        int boardWidth = 630;
+        int boardHeight = 460;
+
         menuFrame = new JFrame("Main Menu");
         menuFrame.setSize(boardWidth, boardHeight);
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setLocationRelativeTo(null);
+        GameUtils.centerWindow(menuFrame);
 
-        backgroundImage = new ImageIcon(getClass().getResource("./background.jpg")).getImage();
+        Image backgroundImage = GameUtils.loadImage("/background.jpg");
 
         JPanel mainPanel = new JPanel(){
             protected void paintComponent(Graphics g){

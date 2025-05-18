@@ -2,35 +2,36 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
+import utils.GameUtils;
 
 public class CatchBall extends JPanel implements ActionListener,KeyListener {
 
-   int boardWidth = 630;
-   int boardHeight = 460;
+    private final int boardWidth = 630;
+    private final int boardHeight = 460;
 
-    Image backgroundImage;
-    Image ballImage;
-    Image basketImage;
+    private Image backgroundImage;
+    private Image ballImage;
+    private Image basketImage;
 
-    int ballX,ballY;
-    int ballSize = 40;
-    int ballSpeed = 5;
+    private int ballX, ballY;
+    private final int ballSize = 40;
+    private final int ballSpeed = 5;
 
-    int basketX,basketY;
-    int basketWidth = 80;
-    int basketHeight = 50;
-    int basketSpeed = 20;
+    private int basketX, basketY;
+    private final int basketWidth = 80;
+    private final int basketHeight = 50;
+    private final int basketSpeed = 20;
 
-    Timer timer;
-    int score = 0;
-    int missedBalls = 0;
-    boolean gameOver = false;
+    private Timer timer;
+    private int score = 0;
+    private int missedBalls = 0;
+    private boolean gameOver = false;
 
     CatchBall() {
         setPreferredSize(new Dimension(boardWidth,boardHeight));
-        backgroundImage = new ImageIcon(getClass().getResource("./background.jpg")).getImage();
-        ballImage = new ImageIcon(getClass().getResource("./ball.png")).getImage();
-        basketImage = new ImageIcon(getClass().getResource("./basket.png")).getImage();
+        backgroundImage = GameUtils.loadImage("/background.jpg");
+        ballImage = GameUtils.loadImage("/ball.png");
+        basketImage = GameUtils.loadImage("/basket.png");
 
         ballX = new Random().nextInt(boardWidth-ballSize);
         ballY = 0;
@@ -119,7 +120,7 @@ public class CatchBall extends JPanel implements ActionListener,KeyListener {
         score = 0;
         missedBalls = 0;
         gameOver = false;
-        ballX = new Random().nextInt(boardWidth-ballSize);
+        ballX = GameUtils.getRandomX(boardWidth - ballSize);
         ballY = 0;
         basketX = (boardWidth - basketWidth)/2;
         basketY = (boardHeight - basketHeight) - 10;
@@ -129,7 +130,7 @@ public class CatchBall extends JPanel implements ActionListener,KeyListener {
 
     public void resetBall(){
         ballY = 0;
-        ballX = new Random().nextInt(boardWidth - ballSize);
+        ballX = GameUtils.getRandomX(boardWidth - ballSize);
     }
 
     @Override
