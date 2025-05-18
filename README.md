@@ -1,19 +1,19 @@
 # Catch The Ball
 
-Catch The Ball is a desktop game developed in Java using the Swing framework. The objective of the game is to control a basket and catch falling balls. If a ball is missed, the game ends.
+Catch The Ball is a desktop game developed in Java using the Swing framework. The objective of the game is to control a basket and catch falling balls. If 5 ball is missed, the game ends.
 
 ## Features
 
 - User-friendly menu screen with Start and Exit options
 - Simple controls and mechanics suitable for all ages
 - Custom game graphics including background, ball, and basket
-- Game Over screen upon missing a ball
+- Game Over screen upon missing 5 balls.
 
 ## How to Play
 
 - Use the left and right arrow keys to move the basket.
 - Catch as many balls as possible to increase your score.
-- The game ends when a ball is missed
+- The game ends when 5 ball is missed
 
  ## Controls
 
