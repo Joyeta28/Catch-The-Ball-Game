@@ -13,9 +13,11 @@ public class CatchBall extends JPanel implements ActionListener,KeyListener {
     private Image ballImage;
     private Image basketImage;
 
-    private int ballX, ballY;
+    private  final int  numBall = 2;
+    private int[] ballX = new int[numBall];
+    private int[] ballY = new int[numBall];
     private final int ballSize = 40;
-    private final int ballSpeed = 5;
+    private final int ballSpeed = 4;
 
     private int basketX, basketY;
     private final int basketWidth = 80;
@@ -33,8 +35,10 @@ public class CatchBall extends JPanel implements ActionListener,KeyListener {
         ballImage = GameUtils.loadImage("/ball.png");
         basketImage = GameUtils.loadImage("/basket.png");
 
-        ballX = new Random().nextInt(boardWidth-ballSize);
-        ballY = 0;
+        for(int i=0;i<numBall;i++) {
+            ballX[i] = GameUtils.getRandomX(boardWidth - ballSize);
+            ballY[i] = 0;
+        }
         basketX = (boardWidth-basketWidth)/2;
         basketY = boardHeight - basketHeight - 10;
 
@@ -54,7 +58,9 @@ public class CatchBall extends JPanel implements ActionListener,KeyListener {
 
     public void draw(Graphics g) {
         g.drawImage(backgroundImage, 0, 0, boardWidth, boardHeight, null);
-        g.drawImage(ballImage,ballX,ballY,ballSize,ballSize,null);
+        for(int i=0;i<numBall;i++){
+            g.drawImage(ballImage,ballX[i],ballY[i],ballSize,ballSize,null);
+        }
         g.drawImage(basketImage,basketX,basketY,basketWidth,basketHeight,null);
 
         g.setColor(Color.BLACK);
@@ -75,17 +81,19 @@ public class CatchBall extends JPanel implements ActionListener,KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!gameOver) {
-            ballY += ballSpeed;
+            for (int i=0;i<numBall;i++) {
+                ballY[i] += ballSpeed;
 
-            if (ballY >= basketY && ballX + ballSize >= basketX && ballX <= basketX + basketWidth) {
-                score++;
-                resetBall();
+                if (ballY[i] >= basketY && ballX[i] + ballSize >= basketX && ballX[i] <= basketX + basketWidth) {
+                    score++;
+                    resetBall(i);
+                }
+                if (ballY[i] > boardHeight) {
+                    missedBalls++;
+                    resetBall(i);
+                }
             }
-            if (ballY > boardHeight) {
-                missedBalls++;
-                resetBall();
-            }
-            if(missedBalls>=3){
+            if(missedBalls>=5){
                 gameOver = true;
                 timer.stop();
 
@@ -120,17 +128,19 @@ public class CatchBall extends JPanel implements ActionListener,KeyListener {
         score = 0;
         missedBalls = 0;
         gameOver = false;
-        ballX = GameUtils.getRandomX(boardWidth - ballSize);
-        ballY = 0;
+        for(int i=0;i<numBall;i++) {
+            ballX[i] = GameUtils.getRandomX(boardWidth - ballSize);
+            ballY[i] = -i*100;
+        }
         basketX = (boardWidth - basketWidth)/2;
         basketY = (boardHeight - basketHeight) - 10;
         timer.start();
         repaint();
     }
 
-    public void resetBall(){
-        ballY = 0;
-        ballX = GameUtils.getRandomX(boardWidth - ballSize);
+    public void resetBall(int i){
+        ballY[i] = 0;
+        ballX[i] = GameUtils.getRandomX(boardWidth - ballSize);
     }
 
     @Override
